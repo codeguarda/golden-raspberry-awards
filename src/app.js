@@ -1,12 +1,12 @@
-const express = require('express');
-const { initializeDatabase } = require('./database');
-const routes = require('./routes')
+import express from 'express';
+import { initializeDatabase } from './database.js';
+import routes from './routes.js';
+import setupSwagger from './swagger.js';
 
 const app = express();
 const PORT = 3000;
-const setupSwagger = require('./swagger');
 
-// Configuração Swagger
+// Configuração do Swagger
 setupSwagger(app);
 
 // Middleware
@@ -25,3 +25,5 @@ initializeDatabase()
   .catch((error) => {
     console.error('Erro ao inicializar a aplicação:', error);
   });
+
+export default app;

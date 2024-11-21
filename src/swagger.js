@@ -1,28 +1,20 @@
+import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
 
-const swaggerJsDoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
-
-const swaggerOptions = {
-  definition: {
+const options = {
+  swaggerDefinition: {
     openapi: '3.0.0',
     info: {
       title: 'Golden Raspberry Awards API',
       version: '1.0.0',
-      description: 'API para consulta de intervalos de prêmios do Golden Raspberry Awards',
+      description: 'API para obter os intervalos de prêmios do Golden Raspberry Awards',
     },
-    servers: [
-      {
-        url: 'http://localhost:3000',
-      },
-    ],
   },
-  apis: ['./src/routes/*.js'], // Caminho para as definições das rotas
+  apis: ['./src/routes.js'], // Arquivos que contêm as definições das rotas
 };
 
-const swaggerDocs = swaggerJsDoc(swaggerOptions);
+const specs = swaggerJsdoc(options);
 
-const setupSwagger = (app) => {
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-};
-
-module.exports = setupSwagger;
+export default function setupSwagger(app) {
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+}
